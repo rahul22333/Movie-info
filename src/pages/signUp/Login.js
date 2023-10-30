@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, CssBaseline, TextField, Grid, Box, Typography, Container } from '@mui/material';
+import { Button, CssBaseline, TextField, Grid, Box, Container } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -106,27 +106,25 @@ export default function LoginPage() {
             >
               signUp
             </Button>
-            <GoogleOAuthProvider clientId="845526233994-5vq7kk80f050a7sco1ubesvlla6nclm9.apps.googleusercontent.com">
-              <GoogleLogin
-                theme='filled_blue'
-                shape='circle'
-                logo_alignment="center"
-                onSuccess={credentialResponse => {
-                  console.log(credentialResponse);
-                  const decoded = jwt_decode(credentialResponse.credential);
-                  console.log(decoded)
-                  setVerified(decoded.email_verified)
+            <GoogleLogin
+              theme='filled_blue'
+              shape='circle'
+              logo_alignment="center"
+              onSuccess={credentialResponse => {
+                const decoded = jwt_decode(credentialResponse.credential);
+                console.log(decoded)
+                setVerified(decoded.email_verified)
 
-                }}
-                onError={() => {
-                  alert('Login Failed');
-                }}
-              />
-            </GoogleOAuthProvider>
-
+              }}
+              onError={() => {
+                alert('Login Failed');
+              }}
+            />
           </Box>
         </Box>
       </Container>
     </ThemeProvider>
   );
 }
+
+

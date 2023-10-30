@@ -57,9 +57,9 @@ export default function NavBar() {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
+
                 </Toolbar>
             </AppBar>
-
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -92,6 +92,8 @@ export default function NavBar() {
 
                 </Box>
             </Modal>
+
+
         </ThemeProvider>
     );
 }
@@ -157,4 +159,3 @@ const style = {
     overflow: "scroll",
     overflow: 'hidden'
 };
-
