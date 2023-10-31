@@ -22,11 +22,9 @@ export default function NavBar({ tokenValue }) {
     const handleSearch = (e) => {
         const value = e.target.value
         setSearch(value)
-        console.log(search)
     }
     const handleSearchlist = () => {
         setSearch("")
-        console.log(searchList)
         navigate('/searchlist', { state: { searchList } })
     }
     return (
