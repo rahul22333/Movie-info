@@ -1,39 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import { AppBar, Toolbar, Typography, InputBase, Box, Divider, Modal } from '@mui/material';
+import { AppBar, Toolbar, Typography, InputBase, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FetchData } from './Fetchdata';
 import { useNavigate } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBar({ tokenValue }) {
     const [search, setSearch] = useState()
     const [searchList, setSearchList] = useState([])
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => {
-        setOpen(false)
-        setSearch("")
-    };
     const navigate = useNavigate()
     const searchListApi = `https://api.themoviedb.org/3/search/movie?query=${search ? search : ""}&api_key=9d5b8e25ecd3e4f7d23376aee2eda565`
     useEffect(() => {
         FetchData(searchListApi).then((data) => {
             setSearchList(data)
-            console.log(searchList)
         }).catch((err) => {
             alert(err)
         })
     }, [search])
     const handleSearch = (e) => {
-        setTimeout(() => {
-            setSearch(e.target.value)
-        }, 1000)
+        const value = e.target.value
+        setSearch(value)
+        console.log(search)
     }
-    const handleSearchlist = (id, type = 'movie') => {
-        navigate(`/movieinfo/${id}`, { state: { type } })
-        handleClose()
+    const handleSearchlist = () => {
+        setSearch("")
+        console.log(searchList)
+        navigate('/searchlist', { state: { searchList } })
     }
     return (
         <ThemeProvider theme={darkTheme}>
@@ -48,50 +42,28 @@ export default function NavBar() {
                     >
                         MOVIES App
                     </Typography>
-                    <Search onClick={handleOpen}>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+                    {tokenValue ?
+                        <Search >
+                            <SearchIconWrapper >
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="…"
+                                inputProps={{ 'aria-label': 'search'  , value:search}}
+                                onChange={handleSearch}
+                            />
+                            <Button
+                                onClick={handleSearchlist}
+                                variant="text"
+                                color='secondary'
 
+                            >
+                                search
+                            </Button>
+                        </Search> : null
+                    }
                 </Toolbar>
             </AppBar>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Search >
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                            onChange={(e) => { handleSearch(e) }}
-                        />
-                    </Search>
-
-                    {searchList ?
-                        searchList.map((item, index) => (
-
-                            <Typography id="modal-modal-description" sx={{ mt: 2 }}
-                                key={index}
-                                onClick={() => { handleSearchlist(item.id) }}
-                            >
-                                {item.title}
-                                <Divider />
-                            </Typography>
-
-                        )) : null}
-
-                </Box>
-            </Modal>
 
 
         </ThemeProvider>
@@ -146,16 +118,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const style = {
-    position: 'absolute',
-    top: '10%',
-    //left: '50%',
-    //transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-    overflow: "scroll",
-    overflow: 'hidden'
-};
+
+
+
+
+
+

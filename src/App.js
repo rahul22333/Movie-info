@@ -12,6 +12,7 @@ const MoviesList = lazy(()=> import('./pages/AllList/AllMovieList'));
 const TvShowList = lazy (()=> import('./pages/AllList/AllTvShow'));
 const NoMatch = lazy(()=>import('./pages/NoMatchPage'));
 const MoviesInfo = lazy (()=>import('./pages/MovieInfo'))
+const SearchList = lazy(()=>import('./pages/SearchList'))
 
 function App() {
   // use token for rendering login page or home page
@@ -27,7 +28,7 @@ function App() {
   /* on the basis condition router has been set for rendering home or login page having path or route for navigate to different page  */
   return (
     <>
-       <Navbar/>
+       <Navbar tokenValue={isToken}/>
       {(isToken) ?
         <Suspense fallback={<SkeletonCard/>}>
        <Routes>
@@ -39,6 +40,7 @@ function App() {
         <Route exact path="/signup" element={<SignupPage />} />
         <Route exact path="/userinfo" element={<UserInfo />} />
         <Route exact path="/movieinfo/:id" element={<MoviesInfo/>}/>
+        <Route exact path="/searchlist" element={<SearchList/>}/>
         <Route exact path="*" element={<NoMatch />} />
       </Routes>
         </Suspense>
