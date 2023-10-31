@@ -40,7 +40,6 @@ export default function NavBar({ tokenValue }) {
                     >
                         MOVIES App
                     </Typography>
-                    {tokenValue ?
                         <Search >
                             <SearchIconWrapper >
                                 <SearchIcon />
@@ -58,8 +57,7 @@ export default function NavBar({ tokenValue }) {
                             >
                                 search
                             </Button>
-                        </Search> : null
-                    }
+                        </Search> 
                 </Toolbar>
             </AppBar>
 
