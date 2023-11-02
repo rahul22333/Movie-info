@@ -56,6 +56,7 @@ function App() {
           <Route exact path='/tv/:title' element={<TvShowList />} />
           <Route exact path="/movieinfo/:id" element={<MoviesInfo/>}/>
           <Route exact path="*" element={<NoMatch />} />
+          <Route exact path="/searchlist" element={<SearchList/>}/>
         </Routes>
           </Suspense>}
 
