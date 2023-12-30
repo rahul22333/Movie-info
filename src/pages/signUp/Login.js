@@ -43,7 +43,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (verified) {
       localStorage.setItem("gmailinfo", JSON.stringify(verified))
-      navigate('/home')
+      navigate('/home' )
     }
   }, [verified])
 

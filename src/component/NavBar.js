@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FetchData } from './Fetchdata';
 import { useNavigate } from "react-router-dom";
 
-export default function NavBar({ tokenValue }) {
+export default function NavBar() {
     const [search, setSearch] = useState()
     const [searchList, setSearchList] = useState([])
     const navigate = useNavigate()
@@ -27,7 +27,7 @@ export default function NavBar({ tokenValue }) {
         setSearch("")
         navigate('/searchlist', { state: { searchList } })
     }
-    return (
+   return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             <AppBar position="static">
@@ -40,7 +40,7 @@ export default function NavBar({ tokenValue }) {
                     >
                         MOVIES App
                     </Typography>
-                        <Search >
+                          <Search >
                             <SearchIconWrapper >
                                 <SearchIcon />
                             </SearchIconWrapper>

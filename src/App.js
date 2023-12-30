@@ -3,7 +3,6 @@ import  { Suspense, lazy } from 'react';
 import './App.css';
 import { Routes, Route } from "react-router-dom";
 import SkeletonCard from './component/SkeletonCard';
-import Navbar from './component/NavBar';
 const HomePage = lazy(() => import('./pages/Home'));
 const LoginPage = lazy(() => import('./pages/signUp/Login'));
 const SignupPage = lazy(() => import('./pages/signUp/SignUp'));
@@ -24,11 +23,10 @@ function App() {
     if (loginInfo||gmailInfo) {
       setIsToken(true)
     }
-  }, [])
+  }, [isToken])
   /* on the basis condition router has been set for rendering home or login page having path or route for navigate to different page  */
   return (
     <>
-       <Navbar tokenValue={isToken}/>
       {(isToken) ?
         <Suspense fallback={<SkeletonCard/>}>
        <Routes>
