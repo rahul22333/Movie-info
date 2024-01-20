@@ -3,7 +3,9 @@ import { Suspense, lazy } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import SkeletonCard from "./component/SkeletonCard";
-const HomePage = lazy(() => import("./pages/Home"));
+import UserContext from "./Context";
+import Protected from "./component/Protected"
+const Home = lazy(() => import("./pages/Home"));
 const LoginPage = lazy(() => import("./pages/signUp/Login"));
 const SignupPage = lazy(() => import("./pages/signUp/SignUp"));
 const UserInfo = lazy(() => import("./pages/signUp/UserInfo"));
@@ -14,28 +16,18 @@ const MoviesInfo = lazy(() => import("./pages/MovieInfo"));
 const SearchList = lazy(() => import("./pages/SearchList"));
 
 function App() {
-  // use token for rendering login page or home page
-  const [isToken, setIsToken] = useState(false);
-  useEffect(() => {
-    // parsing the localstorage the for storing in array or object format
-    const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
-    const gmailInfo = JSON.parse(localStorage.getItem("gmailinfo"));
-    if (loginInfo || gmailInfo) {
-      setIsToken(true);
-    }
-  }, [isToken]);
-  /* on the basis condition router has been set for rendering home or login page having path or route for navigate to different page  */
+  const [loggedData,setLoggedData] = useState({
+    userData:JSON.parse(localStorage.getItem("loginInfo")),
+    userGmail: JSON.parse(localStorage.getItem("gmailinfo")),
+  })
   return (
-    <>
+    <> 
+    <UserContext.Provider value={{loggedData,setLoggedData}}> 
       <Suspense fallback={<SkeletonCard />}>
         <Routes>
-          {isToken ? (
-            <Route exact path="/" element={<HomePage />} />
-          ) : (
-            <Route exact path="/" element={<LoginPage />} />
-          )}
-          <Route exact path="/" element={<HomePage />} />
-          <Route exact path="/home" element={<HomePage />} />
+          <Route exact path="/" element={ <Protected > <Home/></Protected>} />
+          <Route exact path="/home" element= { <Protected> <Home /> </Protected>}/>
+          <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/movie/:title" element={<MoviesList />} />
           <Route exact path="/tv/:title" element={<TvShowList />} />
           <Route exact path="/login" element={<LoginPage />} />
@@ -46,8 +38,11 @@ function App() {
           <Route exact path="*" element={<NoMatch />} />
         </Routes>
       </Suspense>
+      </UserContext.Provider>
     </>
   );
 }
 
 export default App;
+
+

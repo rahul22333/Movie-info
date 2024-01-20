@@ -26,7 +26,7 @@ const RecomMovie = ({ id }) => {
   }, [ids])
   if (recomMovieData.length) {
     return (<><div className=".popular-container">
-      <Link to="/home" style={{ textDecoration: " none ", color: "white" }}>  <h3 className=".popular-heading"> Recommendated Movies</h3></Link>
+      <Link to="/home" style={{ textDecoration: " none ", color: "white" }}>  <h3 className="popular-heading"> Recommendated Movies</h3></Link>
     </div>
       {isLoading ? <SkeletonCard /> : recomMovieData ?
         <HorizontalScroll>

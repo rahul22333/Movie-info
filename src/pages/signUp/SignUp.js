@@ -20,7 +20,6 @@ export default function SignUpPage() {
     const data = localStorage.getItem("signUpInfo")
     if (!data) {
       localStorage.setItem('signUpInfo', JSON.stringify([]))
-      console.log(".. i run ..")
     }
   }, [])
 

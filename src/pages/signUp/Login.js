@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, CssBaseline, TextField, Grid, Box, Container } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { GoogleLogin } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
+import UserContext from '../../Context';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function LoginPage() {
+
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [verified, setVerified] = useState(false);
+
   const navigate = useNavigate();
 
+  const {setLoggedData} = useContext(UserContext)
+  
   const signUpStore = JSON.parse(localStorage.getItem("signUpInfo"));
 
   const handleSubmit = (event) => {
@@ -37,13 +42,15 @@ export default function LoginPage() {
       const pass = password
       const loginInfo = [{ name: name, password: pass }]
       localStorage.setItem("loginInfo", JSON.stringify(loginInfo))
-      navigate("/home")
+      setLoggedData({userData:{name , pass}})
+      navigate("/home" )
     }
   };
   useEffect(() => {
     if (verified) {
       localStorage.setItem("gmailinfo", JSON.stringify(verified))
-      navigate('/home' )
+      setLoggedData({userGmail:verified})
+      navigate('/home'  )
     }
   }, [verified])
 
@@ -112,7 +119,6 @@ export default function LoginPage() {
               logo_alignment="center"
               onSuccess={credentialResponse => {
                 const decoded = jwt_decode(credentialResponse.credential);
-                console.log(decoded)
                 setVerified(decoded.email_verified)
 
               }}

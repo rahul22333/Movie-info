@@ -26,7 +26,7 @@ const SimilarTvShow = ({ id }) => {
   }, [ids])
   if (similarTvData.length) {
     return (<><div className=".popular-container">
-      <Link to="/home" style={{ textDecoration: " none ", color: "white" }}>  <h3 className=".popular-heading">Recommendeted Tv Show</h3></Link>
+      <Link to="/home" style={{ textDecoration: " none ", color: "white" }}>  <h3 className="popular-heading">Recommendeted Tv Show</h3></Link>
     </div>
       {isLoading ? <SkeletonCard /> : similarTvData ?
         <HorizontalScroll>

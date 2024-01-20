@@ -26,7 +26,7 @@ const SimilarMovie = ({ id }) => {
   }, [ids])
   if (similarMovieData.length) {
     return (<><div className=".popular-container">
-      <Link to="/home" style={{ textDecoration: " none ", color: "white" }}>  <h3 className=".popular-heading"> Similar Movies</h3></Link>
+      <Link to="/home" style={{ textDecoration: " none ", color: "white" }}>  <h3 className="popular-heading"> Similar Movies</h3></Link>
     </div>
       {isLoading ? <SkeletonCard /> : similarMovieData ?
         <HorizontalScroll>
